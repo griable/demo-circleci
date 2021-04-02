@@ -55,7 +55,7 @@ jobs:
     - <<: *install_node_modules
     - run:
         name: install netlify cli
-        command: sudo npm install netlify-cli -g
+        command: sudo npm install -g --silent netlify-cli
     - run:
         name: deploy site to netlify
         command: netlify deploy --dir=./dist -p
