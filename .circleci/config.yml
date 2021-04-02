@@ -1,11 +1,7 @@
 executors:
   node:
-    parameters:
-      image:
-        type: string
-        default: "10"
     docker:
-    - image: circleci/node:<< parameters.image >>
+      - image: circleci/node:8
 
 aliases:
   restore_cache: &restore_cache
