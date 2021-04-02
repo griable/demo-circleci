@@ -46,7 +46,7 @@ jobs:
         name: Build Public
         command: npm run generate
     - persist_to_workspace:
-        at: ./
+        root: ./
         paths:
           - dist
   deploy:
