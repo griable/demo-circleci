@@ -46,7 +46,7 @@ jobs:
         name: Build Public
         command: npm run generate
     - persist_to_workspace:
-        root: /home/circleci/project
+        at: ./
         paths:
           - dist
   deploy:
@@ -54,7 +54,7 @@ jobs:
     steps:
     - checkout
     - attach_workspace:
-        at: /home/circleci/project/
+        at: ./
     - <<: *restore_cache
     - <<: *install_node_modules
     - run:
