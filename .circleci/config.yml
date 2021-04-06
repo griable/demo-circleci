@@ -53,11 +53,11 @@ jobs:
       - run:
           name: deploy site to netlify
           command: |
-                    netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > my_workspace/netlify-deploy-url
+            netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > my_workspace/netlify-deploy-url
       - persist_to_workspace:
-        root: my_workspace
-        paths:
-          - netlify-deploy-url
+          root: my_workspace
+          paths:
+            - netlify-deploy-url
   ligthouse:
     executor: node
     steps:
