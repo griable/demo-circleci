@@ -41,16 +41,10 @@ jobs:
       - run:
           name: Build Public
           command: npm run generate
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - dist
   deploy:
     executor: node
     steps:
       - checkout
-      - attach_workspace:
-          at: ./
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
@@ -58,22 +52,22 @@ jobs:
           command: sudo npm install -g --unsafe-perm --silent netlify-cli
       - run:
           name: deploy site to netlify
-          command: netlify deploy --dir=./dist -p
+          command: netlify deploy --dir=./dist -p   | awk '/Website Draft URL: /{print}' > my_workspace/netlify-deploy-url
+      - persist_to_workspace:
+        root: my_workspace
+        paths:
+          - netlify-deploy-url
   ligthouse:
     executor: node
     steps:
       - checkout
       - attach_workspace:
-          at: ./
+          at: my_workspace
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
-          name: install lhci
-          command: sudo npm install -g @lhci/cli@0.7.x
-      - run:
-          name: run ligthouse
-          command: lhci autorun
-
+          name: Print variable
+          command: echo $(cat my_workspace/netlify-deploy-url)
 workflows:
   version: 2
   build_and_deploy:
