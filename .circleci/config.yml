@@ -75,7 +75,7 @@ jobs:
       - run:
           name: Debugtest
           command: |
-                    command: echo 'export URLS=$(<./echo-output)' >> $BASH_ENV
+                    echo 'export URLS=$(<./echo-output)' >> $BASH_ENV
                     echo $URLS
       - lighthouse-check/audit:
           urls: $URLS
