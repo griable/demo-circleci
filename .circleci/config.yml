@@ -24,6 +24,9 @@ aliases:
 
 version: 2.1
 
+orbs:
+  lighthouse-check: foo-software/lighthouse-check@0.0.8
+
 jobs:
   install:
     executor: node
@@ -67,14 +70,13 @@ jobs:
           root: ./
           paths:
             - echo-output
-  print:
+  run_ligthouse:
     executor: node
     steps:
       - attach_workspace:
           at: ./
-      - run:
-          name: deploy site to netlify
-          command: echo $(cat ./echo-output)
+      - lighthouse-check/audit:
+          urls: $(cat ./echo-output)
 
 workflows:
   version: 2
@@ -88,6 +90,6 @@ workflows:
           context: NuxtNetlify
           requires:
             - build_and_lint
-      - print:
+      - run_ligthouse:
           requires:
               - deploy
