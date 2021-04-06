@@ -78,7 +78,7 @@ jobs:
             URLS=$(<./echo-output)
             echo $URLS
       - lighthouse-check/audit:
-          urls: $URLS
+          urls: ${URLS}
 
 workflows:
   version: 2
