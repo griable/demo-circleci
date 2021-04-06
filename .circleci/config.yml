@@ -52,7 +52,8 @@ jobs:
           command: sudo npm install -g --unsafe-perm --silent netlify-cli
       - run:
           name: deploy site to netlify
-          command: netlify deploy --dir=./dist -p   | awk '/Website Draft URL: /{print}' > my_workspace/netlify-deploy-url
+          command: |
+                    netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > my_workspace/netlify-deploy-url
       - persist_to_workspace:
         root: my_workspace
         paths:
