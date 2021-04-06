@@ -72,9 +72,11 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - run: export "URLS=$(<./echo-output)" >> $BASH_ENV
+      - run:
+          name: Debugtest
+          command: cat ./echo-output
       - lighthouse-check/audit:
-          urls: $URLS
+          urls: ${<./echo-output}
 
 workflows:
   version: 2
