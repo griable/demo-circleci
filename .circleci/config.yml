@@ -76,7 +76,7 @@ jobs:
           name: Debugtest
           command: cat ./echo-output
       - lighthouse-check/audit:
-          urls: '$(<./echo-output)'
+          urls: $(<./echo-output)
 
 workflows:
   version: 2
