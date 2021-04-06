@@ -8,7 +8,7 @@ aliases:
     restore_cache:
       name: Restore Npm Package Cache
       keys:
-      - v{{ .Environment.versionCache }}-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum ".circleci/config.yml" }}
+        - v{{ .Environment.versionCache }}-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum ".circleci/config.yml" }}
 
   install_node_modules: &install_node_modules
     run:
@@ -20,7 +20,7 @@ aliases:
       name: Save NPM package cache
       key: v{{ .Environment.versionCache }}-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum ".circleci/config.yml" }}
       paths:
-      - ./node_modules
+        - ./node_modules
 
 version: 2.1
 
@@ -28,38 +28,51 @@ jobs:
   install:
     executor: node
     steps:
-    - checkout
-    - <<: *restore_cache
-    - <<: *install_node_modules
-    - <<: *save_cache
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - <<: *save_cache
   build_and_lint:
     executor: node
     steps:
-    - checkout
-    - <<: *restore_cache
-    - <<: *install_node_modules
-    - run:
-        name: Build Public
-        command: npm run generate
-    - persist_to_workspace:
-        root: ./
-        paths:
-          - dist
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: Build Public
+          command: npm run generate
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - dist
   deploy:
     executor: node
     steps:
-    - checkout
-    - attach_workspace:
-        at: ./
-    - <<: *restore_cache
-    - <<: *install_node_modules
-    - run:
-        name: install netlify cli
-        command: sudo npm install -g --unsafe-perm --silent netlify-cli
-    - run:
-        name: deploy site to netlify
-        command: netlify deploy --dir=./dist -p
-
+      - checkout
+      - attach_workspace:
+          at: ./
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: install netlify cli
+          command: sudo npm install -g --unsafe-perm --silent netlify-cli
+      - run:
+          name: deploy site to netlify
+          command: netlify deploy --dir=./dist -p
+  ligthouse:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: install lhci
+          command: sudo npm install -g @lhci/cli@0.7.x
+      - run:
+          name: run ligthouse
+          command: lhci autorun
 
 workflows:
   version: 2
