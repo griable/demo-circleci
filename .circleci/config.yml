@@ -59,19 +59,19 @@ jobs:
       - run:
           name: deploy site to netlify
           command: |
-            netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > my_workspace/echo-output
+            netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > ./echo-output
       - persist_to_workspace:
-        root: my_workspace
-        paths:
-          - echo-output
+          root: ./
+          paths:
+            - echo-output
   print:
     executor: node
     steps:
+      - attach_to_workspace:
+        at: ./
       - run:
           name: deploy site to netlify
-          command: echo $(cat my_workspace/echo-output)
-      - attach_to_workspace:
-        at: my_workspace
+          command: echo $(cat ./echo-output)
 
 workflows:
   version: 2
