@@ -71,7 +71,7 @@ jobs:
           paths:
             - echo-output
   run_ligthouse:
-    executor: node
+    executor: lighthouse-check/default
     steps:
       - attach_workspace:
           at: ./
