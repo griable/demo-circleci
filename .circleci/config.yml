@@ -76,7 +76,7 @@ jobs:
           name: Debugtest
           command: cat ./echo-output
       - lighthouse-check/audit:
-          urls: 'https://606c6810ea3e1e66f349e7c7--demo-circleci.netlify.app'
+          urls: \'$(cat ./echo-output)\'
 
 workflows:
   version: 2
