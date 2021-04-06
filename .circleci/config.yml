@@ -25,7 +25,7 @@ aliases:
 version: 2.1
 
 orbs:
-  lighthouse-check: foo-software/lighthouse-check@0.0.8
+  lighthouse-check: foo-software/lighthouse-check@0.0.13
 
 jobs:
   install:
@@ -76,7 +76,7 @@ jobs:
       - attach_workspace:
           at: ./
       - lighthouse-check/audit:
-          urls: $(cat ./echo-output)
+          urls: '$(cat ./echo-output)'
 
 workflows:
   version: 2
