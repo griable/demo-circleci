@@ -67,7 +67,7 @@ jobs:
   print:
     executor: node
     steps:
-      - attach_to_workspace:
+      - attach_workspace:
         at: ./
       - run:
           name: deploy site to netlify
