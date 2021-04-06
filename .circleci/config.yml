@@ -88,6 +88,6 @@ workflows:
           context: NuxtNetlify
           requires:
             - build_and_lint
-      - print
+      - print:
           requires:
               - deploy
