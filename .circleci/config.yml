@@ -59,7 +59,7 @@ jobs:
       - run:
           name: deploy site to netlify
           command: |
-            netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > ./echo-output
+            netlify deploy | awk '/Website Draft URL: /{print $0}' | sed  's/.* \(.*\)/\1/' > ./echo-output
       - persist_to_workspace:
           root: ./
           paths:
