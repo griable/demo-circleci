@@ -49,6 +49,8 @@ jobs:
     executor: node
     steps:
       - checkout
+      - attach_workspace:
+          at: ./
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
@@ -57,22 +59,20 @@ jobs:
       - run:
           name: deploy site to netlify
           command: |
-            netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > my_workspace/netlify-deploy-url
+            netlify deploy --dir=./dist -p | awk '/Website Draft URL: /{print}' > my_workspace/echo-output
       - persist_to_workspace:
-          root: my_workspace
-          paths:
-            - netlify-deploy-url
-  ligthouse:
+        root: my_workspace
+        paths:
+          - echo-output
+  print:
     executor: node
     steps:
-      - checkout
-      - attach_workspace:
-          at: my_workspace
-      - <<: *restore_cache
-      - <<: *install_node_modules
       - run:
-          name: Print variable
-          command: echo $(cat my_workspace/netlify-deploy-url)
+          name: deploy site to netlify
+          command: echo $(cat my_workspace/echo-output)
+      - attach_to_workspace:
+        at: my_workspace
+
 workflows:
   version: 2
   build_and_deploy:
