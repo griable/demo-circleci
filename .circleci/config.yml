@@ -41,6 +41,10 @@ jobs:
       - run:
           name: Build Public
           command: npm run generate
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - dist
   deploy:
     executor: node
     steps:
