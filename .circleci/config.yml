@@ -72,7 +72,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-        - run: export "URLS=$(<./echo-output)" >> $BASH_ENV
+      - run: export "URLS=$(<./echo-output)" >> $BASH_ENV
       - lighthouse-check/audit:
           urls: $URLS
 
