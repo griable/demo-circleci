@@ -60,9 +60,9 @@ jobs:
           name: deploy site to netlify
           command: |
             netlify deploy | awk '/Website Draft URL: /{print $0}' | sed  's/.* \(.*\)/\1/' > ./echo-output
-          name: Debug test
-          command: |
-            cat ./echo-output
+      - run:
+          name: Debugtest
+          command: cat ./echo-output
       - persist_to_workspace:
           root: ./
           paths:
@@ -89,3 +89,5 @@ workflows:
           requires:
             - build_and_lint
       - print
+          requires:
+              - deploy
