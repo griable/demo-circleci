@@ -85,3 +85,4 @@ workflows:
           context: NuxtNetlify
           requires:
             - build_and_lint
+      - print
