@@ -48,7 +48,7 @@ jobs:
           root: ./
           paths:
             - dist
-  bundlewatch:
+  test:
     executor: node
     steps:
       - attach_workspace:
@@ -113,17 +113,17 @@ workflows:
       - build_and_lint:
           requires:
             - install
-      - bundlewatch:
+      - test:
           context: NuxtNetlify
           requires:
             - build_and_lint
       - deploy:
           context: NuxtNetlify
           requires:
-            - build_and_lint
+            - test
       # - run_ligthouse:
       #     requires:
-      #         - deploy
+      #         - test
       - zip_and_store:
           requires:
-              - build_and_lint
+            - test
