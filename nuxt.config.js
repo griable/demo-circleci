@@ -1,48 +1,50 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: "static",
+  target: 'static',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "demo-circleci",
+    title: 'demo-circleci',
     htmlAttrs: {
-      lang: "en"
+      lang: 'en'
     },
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" }
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: '' }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: [
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    analyze: true,
     publicPath: process.env.NODE_ENV === "development" ? "_nuxt" : "/",
     filenames: {
-      app: ({ isDev, isModern }) =>
-        isDev
-          ? `[name]${isModern ? ".modern" : ""}.js`
-          : `app-[contenthash:7]${isModern ? ".modern" : ""}.js`,
-      chunk: ({ isDev, isModern }) =>
-        isDev
-          ? `[name]${isModern ? ".modern" : ""}.js`
-          : `[contenthash:7]${isModern ? ".modern" : ""}.js`
+      app: ({ isDev }) => (isDev ? "[name].js" : "app-[contenthash].js"),
+      vendor: ({ isDev }) => (isDev ? "[name].js" : "vendor-[contenthash].js"),
+      chunk: ({ isDev }) => (isDev ? "[name].js" : "[contenthash].js")
     },
     extend(config, { isDev, isClient }) {
       const rule = config.module.rules.find(rule => rule.test.test(".jpg"));
@@ -61,4 +63,4 @@ export default {
       });
     }
   }
-};
+}

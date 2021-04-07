@@ -23,7 +23,11 @@
         "maxSize": "70 kB"
       },
       {
-        "path": "dist/!(app-)*.js",
+        "path": "dist/vendor-*.js",
+        "maxSize": "70 kB"
+      },
+      {
+        "path": "dist/!(app|vendor)*.js",
         "maxSize": "10 kB"
       }
     ]
