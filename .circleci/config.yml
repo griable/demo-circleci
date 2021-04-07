@@ -62,10 +62,11 @@ jobs:
   zip_and_store:
     executor: node
     steps:
-      - attach_workspace:
-          at: ./
+      - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
+      - attach_workspace:
+          at: ./
       - run:
           name: Compress Artifacts
           command: zip -r myartifact.zip dist
