@@ -51,11 +51,11 @@ jobs:
   test:
     executor: node
     steps:
-      - attach_workspace:
-          at: ./
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
+      - attach_workspace:
+          at: ./
       - run:
           name: Check bunlde size
           command: npm run bundlewatch
