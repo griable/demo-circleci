@@ -7,13 +7,25 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "test": "bundlesize"
+    "bundlewatch": "bundlewatch"
   },
   "dependencies": {
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3"
   },
   "devDependencies": {
-    "bundlesize": "^0.18.1"
+    "bundlewatch": "^0.3.2"
+  },
+  "bundlewatch": {
+    "files": [
+      {
+        "path": "dist/app.*.js",
+        "maxSize": "30 kB"
+      },
+      {
+        "path": "dist/!(app.)*.js",
+        "maxSize": "10 kB"
+      }
+    ]
   }
 }
