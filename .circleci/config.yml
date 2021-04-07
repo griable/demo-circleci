@@ -59,8 +59,8 @@ jobs:
           name: Compress Artifacts
           command: zip -r myartifact.zip dist
       - store_artifacts:
-          path: myartifact.zip
-          destination: artifact_name
+          path: archive.zip
+          destination: archive
   deploy:
     executor: node
     steps:
