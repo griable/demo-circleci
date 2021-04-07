@@ -40,6 +40,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     publicPath: process.env.NODE_ENV === "development" ? "_nuxt" : "/",
+    filenames: {
+      app: ({ isDev }) => (isDev ? "[name].js" : "app-[contenthash].js"),
+      chunk: ({ isDev }) => (isDev ? "[name].js" : "[contenthash].js")
+    },
     extend(config, { isDev, isClient }) {
       const rule = config.module.rules.find(rule => rule.test.test(".jpg"));
       config.module.rules.splice(config.module.rules.indexOf(rule), 1);
