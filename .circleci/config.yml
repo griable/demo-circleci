@@ -53,6 +53,9 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
       - run:
           name: Check bunlde size
           command: npm run bundlewatch
