@@ -39,7 +39,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    analyze: true,
     publicPath: process.env.NODE_ENV === "development" ? "_nuxt" : "/",
     filenames: {
       app: ({ isDev }) => (isDev ? "[name].js" : "app-[contenthash].js"),
