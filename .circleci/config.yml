@@ -43,7 +43,7 @@ jobs:
       - <<: *install_node_modules
       - run:
           name: Build Public
-          command: npm run generate
+          command: npm build && npm run generate
       - persist_to_workspace:
           root: ./
           paths:
