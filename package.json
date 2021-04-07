@@ -26,9 +26,6 @@
         "path": "dist/!(app-)*.js",
         "maxSize": "10 kB"
       }
-    ],
-    "ci": {
-      "trackBranches": ["main"]
-    }
+    ]
   }
 }
