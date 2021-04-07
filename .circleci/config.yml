@@ -48,6 +48,14 @@ jobs:
           root: ./
           paths:
             - dist
+  bundlewatch:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Check bunlde size
+          command: npm run bundlewatch
   zip_and_store:
     executor: node
     steps:
@@ -105,6 +113,10 @@ workflows:
       - build_and_lint:
           requires:
             - install
+      - bundlewatch:
+          context: NuxtNetlify
+          requires:
+            - build_and_lint
       - deploy:
           context: NuxtNetlify
           requires:
