@@ -19,24 +19,16 @@
   "bundlewatch": {
     "files": [
       {
-        "path": "dist/app*.js",
+        "path": "dist/*.js",
         "maxSize": "30 kB"
       },
       {
-        "path": "dist/!(app)*.js",
+        "path": "dist/+(pages|static)/*.js",
         "maxSize": "30 kB"
       },
       {
         "path": "dist/vendors/app*.js",
         "maxSize": "70 kB"
-      },
-      {
-        "path": "dist/vendors/!(app)*.js",
-        "maxSize": "30 kB"
-      },
-      {
-        "path": "dist/(pages|static)/**.js",
-        "maxSize": "30 kB"
       }
     ]
   }
