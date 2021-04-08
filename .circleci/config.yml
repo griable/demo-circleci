@@ -55,28 +55,35 @@ jobs:
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
+      # - run:
+      #     name: Bump package version
+      #     command: |
+      #       branch=$(git log -1 --pretty="%s" | grep -Po '(?<=\/).*' || true;)
+      #       semverBump=$(case $branch in
+      #         *"feat/"*) echo "minor" ;;
+      #         *"bug/"*) echo "patch" ;;
+      #         *"hot/"*) echo "patch" ;;
+      #         *"patch/"*) echo "patch" ;;
+      #         *"hotfix/"*) echo "patch" ;;
+      #         *) echo false ;;
+      #       esac)
+      #       if [ $semverBump != false ]
+      #       then
+      #         npm version --no-git-tag-version $semverBump || true
+      #         DATE=`date +%Y.%m`
+      #         VERSION=$(jq -r .version package.json)
+      #         sed -i "/version/c\  \"version\": \"${VERSION}+$DATE.$CIRCLE_BUILD_NUM\"," package.json
+      #         git push origin master
+      #         git push --tags
+      #         exit 0;
+      #       fi
       - run:
-          name: Bump package version
-          command: |
-            branch=$(git log -1 --pretty="%s" | grep -Po '(?<=\/).*' || true;)
-            semverBump=$(case $branch in
-              *"feat/"*) echo "minor" ;;
-              *"bug/"*) echo "patch" ;;
-              *"hot/"*) echo "patch" ;;
-              *"patch/"*) echo "patch" ;;
-              *"hotfix/"*) echo "patch" ;;
-              *) echo false ;;
-            esac)
-            if [ $semverBump != false ]
-            then
-              npm version --no-git-tag-version $semverBump || true
-              DATE=`date +%Y.%m`
-              VERSION=$(jq -r .version package.json)
-              sed -i "/version/c\  \"version\": \"${VERSION}+$DATE.$CIRCLE_BUILD_NUM\"," package.json
-              git push origin master
-              git push --tags
-              exit 0;
-            fi
+          name: Versioning
+          command: npm version patch -m "version %s [skip ci]"
+      - run:
+          name: Push tag & changes to github.com
+          command: git push
+
   test:
     executor: node
     steps:
@@ -173,3 +180,6 @@ workflows:
       - bump_version:
           requires:
             - build_and_lint
+          filters:
+            branches:
+              only: develop
