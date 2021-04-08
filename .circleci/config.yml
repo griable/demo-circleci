@@ -77,6 +77,9 @@ jobs:
       #         git push --tags
       #         exit 0;
       #       fi
+      - add_ssh_keys:
+          fingerprints:
+            - "b2:79:96:4b:8e:30:e4:b8:c0:5f:de:0c:c0:f8:1b:f5"
       - run:
           name: Setup Git
           command: |
