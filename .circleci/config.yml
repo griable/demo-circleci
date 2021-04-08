@@ -138,7 +138,7 @@ workflows:
             branches:
               ignore: master
           requires:
-            - preview
+            - deploy
       - zip_and_store:
           requires:
             - test
