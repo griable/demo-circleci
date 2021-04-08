@@ -88,7 +88,7 @@ jobs:
           name: "Did it work?"
           command: echo $MY_ENV_VAR
       - lighthouse-check/audit:
-          urls: ${$MY_ENV_VAR}
+          urls: ${MY_ENV_VAR}
 
 workflows:
   version: 2
