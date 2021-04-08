@@ -49,6 +49,34 @@ jobs:
           root: ./
           paths:
             - dist
+  bump_version:
+    executor: node
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_node_modules
+      - run:
+          name: Bump package version
+          command: |
+            branch=$(git log -1 --pretty="%s" | grep -Po '(?<=\/).*' || true;)
+            semverBump=$(case $branch in
+              *"feat/"*) echo "minor" ;;
+              *"bug/"*) echo "patch" ;;
+              *"hot/"*) echo "patch" ;;
+              *"patch/"*) echo "patch" ;;
+              *"hotfix/"*) echo "patch" ;;
+              *) echo false ;;
+            esac)
+            if [ $semverBump != false ]
+            then
+              npm version --no-git-tag-version $semverBump || true
+              DATE=`date +%Y.%m`
+              VERSION=$(jq -r .version package.json)
+              sed -i "/version/c\  \"version\": \"${VERSION}+$DATE.$CIRCLE_BUILD_NUM\"," package.json
+              git push origin master
+              git push --tags
+              exit 0;
+            fi
   test:
     executor: node
     steps:
@@ -142,4 +170,6 @@ workflows:
       - zip_and_store:
           requires:
             - test
-
+      - bump_version:
+          requires:
+            - build_and_lint
