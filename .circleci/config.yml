@@ -190,4 +190,6 @@ workflows:
             - build_and_lint
           filters:
             branches:
-              only: develop
+              only:
+                - develop
+                - master
