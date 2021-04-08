@@ -78,13 +78,13 @@ jobs:
       #         exit 0;
       #       fi
       - run:
-          name: Versioning
-          command: npm version patch -m "version %s [skip ci]"
-      - run:
           name: Setup Git
           command: |
-            git config --global user.email "gabriel.slama@akqa.com"
-            git config --global user.name "Gabriel Slama"
+            git config user.email "gabriel.slama@akqa.com"
+            git config user.name "Gabriel Slama"
+      - run:
+          name: Versioning
+          command: npm version patch -m "version %s [skip ci]"
       - run:
           name: Push tag & changes to github.com
           command: git push
