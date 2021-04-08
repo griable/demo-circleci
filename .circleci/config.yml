@@ -26,6 +26,7 @@ version: 2.1
 
 orbs:
   lighthouse-check: foo-software/lighthouse-check@0.0.13
+  pa11yci: nebulab/pa11yci@1.0.0
 
 jobs:
   install:
@@ -128,6 +129,17 @@ workflows:
       # - run_ligthouse:
       #     requires:
       #         - test
+      - pa11yci/a11y-audit:
+          custom_url_command: |
+            if [[ -f ./echo-output ]]; then
+              sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
+            fi
+          filters:
+            branches:
+              ignore: master
+          requires:
+            - preview
       - zip_and_store:
           requires:
             - test
+
