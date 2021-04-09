@@ -139,19 +139,22 @@ jobs:
           root: ./
           paths:
             - echo-output
-  # run_ligthouse:
-  #   executor: lighthouse-check/default
-  #   steps:
-  #     - attach_workspace:
-  #         at: ./
-  #     - run:
-  #         name: Write variable
-  #         command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
-  #     - run:
-  #         name: "Did it work?"
-  #         command: echo $MY_ENV_VAR
-  #     - lighthouse-check/audit:
-  #         urls: $MY_ENV_VAR
+  run_ligthouse:
+    executor: lighthouse-check/default
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Write variable
+          command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
+      - run:
+          name: "Did it work?"
+          command: echo $MY_ENV_VAR
+      - run:
+          name: "Did it work?"
+          command: echo $MY_ENV_VAR2
+      - lighthouse-check/audit:
+          urls: $MY_ENV_VAR2
 
 workflows:
   version: 2
