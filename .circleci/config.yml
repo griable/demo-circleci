@@ -135,7 +135,7 @@ jobs:
       - run:
           command: |
             rm ./echo-output
-            echo 'https://www.google.fr' > ./echo-output
+            echo 'https://www.$((1 + SRANDOM % 10)).fr' > ./echo-output
       - persist_to_workspace:
           root: ./
           paths:
