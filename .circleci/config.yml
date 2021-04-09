@@ -187,6 +187,9 @@ workflows:
             - deploy
       - zip_and_store:
           requires:
+            - lighthouse
+      - zip_and_store:
+          requires:
             - test
       # - bump_version:
       #     requires:
