@@ -26,6 +26,7 @@ version: 2.1
 
 orbs:
   lighthouse-check: foo-software/lighthouse-check@0.0.13
+  pa11yci: nebulab/pa11yci@1.0.0
 
 jobs:
   install:
@@ -48,30 +49,6 @@ jobs:
           root: ./
           paths:
             - dist
-  test:
-    executor: node
-    steps:
-      - checkout
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - attach_workspace:
-          at: ./
-      - run:
-          name: Check bunlde size
-          command: npm run bundlewatch
-  zip_and_store:
-    executor: node
-    steps:
-      - attach_workspace:
-          at: ./
-      - <<: *restore_cache
-      - <<: *install_node_modules
-      - run:
-          name: Compress Artifacts
-          command: zip -r myartifact.zip dist
-      - store_artifacts:
-          path: archive.zip
-          destination: archive
   deploy:
     executor: node
     steps:
@@ -87,26 +64,42 @@ jobs:
           name: deploy site to netlify
           command: |
             netlify deploy | awk '/Website Draft URL: /{print $0}' | sed  's/.* \(.*\)/\1/' > ./echo-output
-      - run:
-          name: Debugtest
-          command: cat ./echo-output
       - persist_to_workspace:
           root: ./
           paths:
             - echo-output
-  # run_ligthouse:
-  #   executor: lighthouse-check/default
-  #   steps:
-  #     - attach_workspace:
-  #         at: ./
-  #     - run:
-  #         name: Write variable
-  #         command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
-  #     - run:
-  #         name: "Did it work?"
-  #         command: echo $MY_ENV_VAR
-  #     - lighthouse-check/audit:
-  #         urls: $MY_ENV_VAR
+  print_debug:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Print
+          command: cat ./echo-output
+  run_ligthouse:
+    executor: lighthouse-check/default
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Write variable
+          command: echo 'export MY_ENV_VAR2="$(cat ./echo-output)"' >> $BASH_ENV
+      - run:
+          name: "Did it work?"
+          command: echo $MY_ENV_VAR2
+  run_ligthouse:
+    executor: lighthouse-check/default
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: "Did it work1?"
+          command: echo $MY_ENV_VAR
+      - run:
+          name: "Did it work2?"
+          command: echo $MY_ENV_VAR2
+      - lighthouse-check/audit:
+          urls: ${MY_ENV_VAR}
 
 workflows:
   version: 2
@@ -116,17 +109,13 @@ workflows:
       - build_and_lint:
           requires:
             - install
-      - test:
-          context: NuxtNetlify
-          requires:
-            - build_and_lint
       - deploy:
           context: NuxtNetlify
           requires:
-            - test
-      # - run_ligthouse:
-      #     requires:
-      #         - test
-      - zip_and_store:
+            - build_and_lint
+      - print_debug:
           requires:
-            - test
+            - deploy
+      - run_ligthouse:
+          requires:
+            - print_debug
