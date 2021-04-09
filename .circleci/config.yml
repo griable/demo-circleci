@@ -185,9 +185,9 @@ workflows:
               ignore: master
           requires:
             - deploy
-      - zip_and_store:
+      - lighthouse
           requires:
-            - lighthouse
+            - test
       - zip_and_store:
           requires:
             - test
