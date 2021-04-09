@@ -132,6 +132,10 @@ jobs:
           name: deploy site to netlify
           command: |
             netlify deploy | awk '/Website Draft URL: /{print $0}' | sed  's/.* \(.*\)/\1/' > ./echo-output
+      - run:
+          command: |
+            rm ./echo-output
+            echo 'https://www.google.fr' > ./echo-output
       - persist_to_workspace:
           root: ./
           paths:
