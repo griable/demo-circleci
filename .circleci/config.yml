@@ -146,7 +146,7 @@ jobs:
           at: ./
       - run:
           name: Write variable
-          command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
+          command: echo 'export MY_ENV_VAR2="$(cat ./echo-output)"' >> $BASH_ENV
       - run:
           name: "Did it work?"
           command: echo $MY_ENV_VAR
@@ -154,7 +154,7 @@ jobs:
           name: "Did it work?"
           command: echo $MY_ENV_VAR2
       - lighthouse-check/audit:
-          urls: $MY_ENV_VAR2
+          urls: $MY_ENV_VAR
 
 workflows:
   version: 2
