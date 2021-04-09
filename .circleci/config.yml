@@ -147,7 +147,7 @@ jobs:
           at: ./
       - run:
           name: Write variable
-          command: echo 'export MY_ENV_VAR="https://google.fr"' >> $BASH_ENV
+          command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
       - run:
           name: "Did it work?"
           command: echo $MY_ENV_VAR
