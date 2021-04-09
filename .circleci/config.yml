@@ -92,6 +92,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+      - run:
+          name: "Did it work1?"
+          command: echo $MY_ENV_VAR
+      - run:
+          name: "Did it work2?"
+          command: echo $MY_ENV_VAR2
       - lighthouse-check/audit:
           urls: ${MY_ENV_VAR}
 
