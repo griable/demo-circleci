@@ -137,7 +137,7 @@ jobs:
           command: cat ./echo-output
       - run:
           name: Write variable
-          command: echo 'export MY_ENV_VAR3="$(cat ./echo-output)"' >> $BASH_ENV
+          command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
       - persist_to_workspace:
           root: ./
           paths:
@@ -149,7 +149,7 @@ jobs:
           at: ./
       - run:
           name: Write variable
-          command: echo 'export MY_ENV_VAR2="$(cat ./echo-output)"' >> $BASH_ENV
+          command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
       - run:
           name: "Did it work?"
           command: echo $MY_ENV_VAR
