@@ -160,7 +160,7 @@ jobs:
           name: "Did it work?"
           command: echo $MY_ENV_VAR3
       - lighthouse-check/audit:
-          urls: $MY_ENV_VAR2
+          urls: $MY_ENV_VAR
 
 workflows:
   version: 2
