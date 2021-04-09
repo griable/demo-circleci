@@ -185,11 +185,11 @@ workflows:
       - zip_and_store:
           requires:
             - test
-      - bump_version:
-          requires:
-            - build_and_lint
-          filters:
-            branches:
-              only:
-                - develop
-                - master
+      # - bump_version:
+      #     requires:
+      #       - build_and_lint
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop
+      #           - master
