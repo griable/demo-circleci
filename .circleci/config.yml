@@ -135,6 +135,9 @@ jobs:
       - run:
           name: Debugtest
           command: cat ./echo-output
+      - run:
+          name: Write variable
+          command: echo 'export MY_ENV_VAR3="$(cat ./echo-output)"' >> $BASH_ENV
       - persist_to_workspace:
           root: ./
           paths:
@@ -153,6 +156,9 @@ jobs:
       - run:
           name: "Did it work?"
           command: echo $MY_ENV_VAR2
+      - run:
+          name: "Did it work?"
+          command: echo $MY_ENV_VAR3
       - lighthouse-check/audit:
           urls: $MY_ENV_VAR2
 
