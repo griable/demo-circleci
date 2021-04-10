@@ -144,12 +144,9 @@ jobs:
           at: ./
       - run:
           name: Write variable
-          command: echo 'export MY_ENV_VAR="$(cat ./echo-output)"' >> $BASH_ENV
-      - run:
-          name: "Did it work?"
-          command: echo $MY_ENV_VAR
+          command: echo 'export NETLIFY_DEPLOY_URL="$(cat ./echo-output)"' >> $BASH_ENV
       - lighthouse-check/audit:
-          urls: $MY_ENV_VAR
+          urls: $NETLIFY_DEPLOY_URL
 
 workflows:
   version: 2
@@ -167,9 +164,6 @@ workflows:
           context: NuxtNetlify
           requires:
             - test
-      # - run_ligthouse:
-      #     requires:
-      #         - test
       - pa11yci/a11y-audit:
           custom_url_command: |
             if [[ -f ./echo-output ]]; then
