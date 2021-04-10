@@ -131,11 +131,8 @@ jobs:
       - run:
           name: deploy site to netlify
           command: |
-            netlify deploy | awk '/Website Draft URL: /{print $0}' | sed  's/.* \(.*\)/\1/' > ./echo-output
-      - run:
-          command: |
             rm ./echo-output
-            echo "https://$((1 + $RANDOM % 10)).com" > ./echo-output
+            netlify deploy --json | jq .deploy_url > ./echo-output
       - persist_to_workspace:
           root: ./
           paths:
