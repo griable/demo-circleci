@@ -131,7 +131,6 @@ jobs:
       - run:
           name: deploy site to netlify
           command: |
-            rm ./echo-output
             netlify deploy --json | jq .deploy_url > ./echo-output
       - persist_to_workspace:
           root: ./
