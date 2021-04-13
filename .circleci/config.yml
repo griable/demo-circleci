@@ -191,33 +191,33 @@ workflows:
           name: install-v<< matrix.page >>
           matrix:
             parameters:
-              page: ['TENNIS']
+              page: ['TENNIS', 'RENO_6']
       - build_and_lint:
           name: build_and_lint-v<< matrix.page >>
           matrix:
             parameters:
-              page: ['TENNIS']
+              page: ['TENNIS', 'RENO_6']
           requires:
             - install-v<< matrix.page >>
       - test:
           name: test-v<< matrix.page >>
           matrix:
             parameters:
-              page: ['TENNIS']
+              page: ['TENNIS', 'RENO_6']
           requires:
             - build_and_lint-v<< matrix.page >>
       - deploy:
           name: deploy-v<< matrix.page >>
           matrix:
             parameters:
-              page: ['TENNIS']
+              page: ['TENNIS', 'RENO_6']
           requires:
             - test-v<< matrix.page >>
       # - pa11yci/a11y-audit:
       #     name: pa11yci-v<< matrix.page >>
       #     matrix:
       #       parameters:
-      #         page: ['TENNIS']
+      #         page: ['TENNIS', 'RENO_6']
       #     custom_url_command: |
       #       if [[ -f ./echo-output ]]; then
       #         sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
@@ -231,14 +231,14 @@ workflows:
           name: run_ligthouse-v<< matrix.page >>
           matrix:
             parameters:
-              page: ['TENNIS']
+              page: ['TENNIS', 'RENO_6']
           requires:
             - deploy-v<< matrix.page >>
       - zip_and_store:
           name: zip_and_store-v<< matrix.page >>
           matrix:
             parameters:
-              page: ['TENNIS']
+              page: ['TENNIS', 'RENO_6']
           requires:
             - test-v<< matrix.page >>
       # - bump_version:
