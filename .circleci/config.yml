@@ -129,6 +129,10 @@ jobs:
           name: install netlify cli
           command: sudo npm install -g --unsafe-perm --silent netlify-cli
       - run:
+          name: Print path
+          command: |
+            which netlify
+      - run:
           name: deploy site to netlify
           command: |
             netlify deploy --json | jq .deploy_url > ./echo-output
