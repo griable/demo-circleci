@@ -150,10 +150,10 @@ jobs:
       - <<: *install_node_modules
       - run:
           name: print variable
-          command: echo '${NETLIFY_AUTH_TOKEN_<< parameters.page >>})'
+          command: echo '${NETLIFY_SITE_ID_<< parameters.page >>})'
       - run:
           name: set variable
-          command: echo 'export NETLIFY_AUTH_TOKEN="${NETLIFY_AUTH_TOKEN_<< parameters.page >>}"' >> $BASH_ENV
+          command: echo 'export NETLIFY_SITE_ID="${NETLIFY_SITE_ID_<< parameters.page >>}"' >> $BASH_ENV
       - run:
           name: install netlify cli
           command: sudo npm install -g --unsafe-perm --silent netlify-cli
