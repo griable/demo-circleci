@@ -21,8 +21,6 @@ aliases:
       key: v{{ .Environment.versionCache }}-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum ".circleci/config.yml" }}
       paths:
         - ./node_modules
-        - /usr/local/bin
-        - /usr/local/lib/node_modules
 
 version: 2.1
 
