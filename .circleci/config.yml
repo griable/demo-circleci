@@ -186,13 +186,13 @@ workflows:
           matrix:
             parameters:
               page: ['reno-6-yasuo', 'tennis-rg']
-      # - build_and_lint:
-      #     name: build_and_lint-v<< matrix.page >>
-      #     matrix:
-      #       parameters:
-      #         page: ['reno-6-yasuo', 'tennis-rg']
-      #     requires:
-      #       - install-v<< matrix.page >>
+      - build_and_lint:
+          name: build_and_lint-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
+          requires:
+            - install-v<< matrix.page >>
       # - test:
       #     name: test-v<< matrix.page >>
       #     matrix:
