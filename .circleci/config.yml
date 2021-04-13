@@ -186,55 +186,55 @@ workflows:
           matrix:
             parameters:
               page: ['reno-6-yasuo', 'tennis-rg']
-      - build_and_lint:
-          name: build_and_lint-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
-          requires:
-            - install-v<< matrix.page >>
-      - test:
-          name: test-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
-          requires:
-            - build_and_lint-v<< matrix.page >>
-      - deploy:
-          name: deploy-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
-          requires:
-            - test-v<< matrix.page >>
-      - pa11yci/a11y-audit:
-          name: deploy-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
-          custom_url_command: |
-            if [[ -f ./echo-output ]]; then
-              sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
-            fi
-          filters:
-            branches:
-              ignore: master
-          requires:
-            - deploy-v<< matrix.page >>
-      - run_ligthouse:
-          name: run_ligthouse-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
-          requires:
-            - deploy-v<< matrix.page >>
-      - zip_and_store:
-          name: zip_and_store-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
-          requires:
-            - test-v<< matrix.page >>
+      # - build_and_lint:
+      #     name: build_and_lint-v<< matrix.page >>
+      #     matrix:
+      #       parameters:
+      #         page: ['reno-6-yasuo', 'tennis-rg']
+      #     requires:
+      #       - install-v<< matrix.page >>
+      # - test:
+      #     name: test-v<< matrix.page >>
+      #     matrix:
+      #       parameters:
+      #         page: ['reno-6-yasuo', 'tennis-rg']
+      #     requires:
+      #       - build_and_lint-v<< matrix.page >>
+      # - deploy:
+      #     name: deploy-v<< matrix.page >>
+      #     matrix:
+      #       parameters:
+      #         page: ['reno-6-yasuo', 'tennis-rg']
+      #     requires:
+      #       - test-v<< matrix.page >>
+      # - pa11yci/a11y-audit:
+      #     name: deploy-v<< matrix.page >>
+      #     matrix:
+      #       parameters:
+      #         page: ['reno-6-yasuo', 'tennis-rg']
+      #     custom_url_command: |
+      #       if [[ -f ./echo-output ]]; then
+      #         sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
+      #       fi
+      #     filters:
+      #       branches:
+      #         ignore: master
+      #     requires:
+      #       - deploy-v<< matrix.page >>
+      # - run_ligthouse:
+      #     name: run_ligthouse-v<< matrix.page >>
+      #     matrix:
+      #       parameters:
+      #         page: ['reno-6-yasuo', 'tennis-rg']
+      #     requires:
+      #       - deploy-v<< matrix.page >>
+      # - zip_and_store:
+      #     name: zip_and_store-v<< matrix.page >>
+      #     matrix:
+      #       parameters:
+      #         page: ['reno-6-yasuo', 'tennis-rg']
+      #     requires:
+      #       - test-v<< matrix.page >>
       # - bump_version:
       #     requires:
       #       - build_and_lint
