@@ -154,6 +154,9 @@ jobs:
       - run:
           name: set variable
           command: echo 'export NETLIFY_SITE_ID="${NETLIFY_SITE_ID_<< parameters.page >>}"' >> $BASH_ENV
+- run:
+          name: print variable
+          command: echo '${NETLIFY_SITE_ID}'
       - run:
           name: install netlify cli
           command: sudo npm install -g --unsafe-perm --silent netlify-cli
