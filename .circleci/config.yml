@@ -228,13 +228,13 @@ workflows:
       #         page: ['reno-6-yasuo', 'tennis-rg']
       #     requires:
       #       - deploy-v<< matrix.page >>
-      # - zip_and_store:
-      #     name: zip_and_store-v<< matrix.page >>
-      #     matrix:
-      #       parameters:
-      #         page: ['reno-6-yasuo', 'tennis-rg']
-      #     requires:
-      #       - test-v<< matrix.page >>
+      - zip_and_store:
+          name: zip_and_store-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
+          requires:
+            - test-v<< matrix.page >>
       # - bump_version:
       #     requires:
       #       - build_and_lint
