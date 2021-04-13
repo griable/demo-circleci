@@ -22,7 +22,7 @@ aliases:
       paths:
         - ./node_modules
         - /usr/local/bin/netlify
-        - /usr/local/lib/node_modules/netlify
+        - /usr/local/lib/node_modules/netlify-cli
 
 version: 2.1
 
