@@ -162,11 +162,9 @@ workflows:
           requires:
             - install
       - test:
-          context: NuxtNetlify
           requires:
             - build_and_lint
       - deploy:
-          context: NuxtNetlify
           requires:
             - test
       - pa11yci/a11y-audit:
