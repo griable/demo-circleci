@@ -21,6 +21,8 @@ aliases:
       key: v{{ .Environment.versionCache }}-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}-{{ checksum ".circleci/config.yml" }}
       paths:
         - ./node_modules
+        - /usr/local/bin/netlify
+        - /usr/local/lib/node_modules/netlify
 
 version: 2.1
 
