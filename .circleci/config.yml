@@ -235,11 +235,11 @@ workflows:
               page: ['reno-6-yasuo', 'tennis-rg']
           requires:
             - test-v<< matrix.page >>
-      - bump_version:
-          requires:
-            - build_and_lint
-          filters:
-            branches:
-              only:
-                - develop
-                - master
+      # - bump_version:
+      #     requires:
+      #       - build_and_lint
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop
+      #           - master
