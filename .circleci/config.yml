@@ -207,20 +207,20 @@ workflows:
               page: ['reno-6-yasuo', 'tennis-rg']
           requires:
             - test-v<< matrix.page >>
-      - pa11yci/a11y-audit:
-          name: pa11yci-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
-          custom_url_command: |
-            if [[ -f ./echo-output ]]; then
-              sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
-            fi
-          filters:
-            branches:
-              ignore: master
-          requires:
-            - deploy-v<< matrix.page >>
+      # - pa11yci/a11y-audit:
+      #     name: pa11yci-v<< matrix.page >>
+      #     matrix:
+      #       parameters:
+      #         page: ['reno-6-yasuo', 'tennis-rg']
+      #     custom_url_command: |
+      #       if [[ -f ./echo-output ]]; then
+      #         sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
+      #       fi
+      #     filters:
+      #       branches:
+      #         ignore: master
+      #     requires:
+      #       - deploy-v<< matrix.page >>
       - run_ligthouse:
           name: run_ligthouse-v<< matrix.page >>
           matrix:
