@@ -155,7 +155,7 @@ jobs:
 
 workflows:
   version: 2
-  build_and_deploy:
+  workflow:
     jobs:
       - install
       - build_and_lint:
@@ -172,7 +172,6 @@ workflows:
             if [[ -f ./echo-output ]]; then
               sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
             fi
-
           filters:
             branches:
               ignore: master
