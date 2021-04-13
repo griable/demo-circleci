@@ -32,6 +32,9 @@ orbs:
 
 jobs:
   install:
+    parameters:
+      page:
+        type: string
     executor: node
     steps:
       - checkout
@@ -39,11 +42,17 @@ jobs:
       - <<: *install_node_modules
       - <<: *save_cache
   build_and_lint:
+    parameters:
+      page:
+        type: string
     executor: node
     steps:
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
+      - run:
+          name: Print value
+          command: echo << matrix.page >>
       - run:
           name: Build Public
           command: npm run generate
@@ -52,6 +61,9 @@ jobs:
           paths:
             - dist
   bump_version:
+    parameters:
+      page:
+        type: string
     executor: node
     steps:
       - checkout
@@ -95,6 +107,9 @@ jobs:
           command: git push --set-upstream origin ${CIRCLE_BRANCH}
 
   test:
+    parameters:
+      page:
+        type: string
     executor: node
     steps:
       - checkout
@@ -106,6 +121,9 @@ jobs:
           name: Check bunlde size
           command: npm run bundlewatch
   zip_and_store:
+    parameters:
+      page:
+        type: string
     executor: node
     steps:
       - checkout
@@ -120,6 +138,9 @@ jobs:
           path: archive.zip
           destination: archive
   deploy:
+    parameters:
+      page:
+        type: string
     executor: node
     steps:
       - checkout
@@ -143,6 +164,9 @@ jobs:
           paths:
             - echo-output
   run_ligthouse:
+    parameters:
+      page:
+        type: string
     executor: lighthouse-check/default
     steps:
       - attach_workspace:
@@ -154,20 +178,40 @@ jobs:
           urls: $NETLIFY_DEPLOY_URL
 
 workflows:
-  version: 2
-  workflow:
+  version: 2.1
+  build_and_deploy:
     jobs:
-      - install
+      - install:
+          name: install-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
       - build_and_lint:
+          name: build_and_lint-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
           requires:
-            - install
+            - install-v<< matrix.page >>
       - test:
+          name: test-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
           requires:
-            - build_and_lint
+            - build_and_lint-v<< matrix.page >>
       - deploy:
+          name: deploy-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
           requires:
-            - test
+            - test-v<< matrix.page >>
       - pa11yci/a11y-audit:
+          name: deploy-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
           custom_url_command: |
             if [[ -f ./echo-output ]]; then
               sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
@@ -176,13 +220,21 @@ workflows:
             branches:
               ignore: master
           requires:
-            - deploy
+            - deploy-v<< matrix.page >>
       - run_ligthouse:
+          name: run_ligthouse-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
           requires:
-            - deploy
+            - deploy-v<< matrix.page >>
       - zip_and_store:
+          name: zip_and_store-v<< matrix.page >>
+          matrix:
+            parameters:
+              page: ['reno-6-yasuo', 'tennis-rg']
           requires:
-            - test
+            - test-v<< matrix.page >>
       # - bump_version:
       #     requires:
       #       - build_and_lint
