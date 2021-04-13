@@ -208,10 +208,7 @@ workflows:
           requires:
             - test-v<< matrix.page >>
       - pa11yci/a11y-audit:
-          name: deploy-v<< matrix.page >>
-          matrix:
-            parameters:
-              page: ['reno-6-yasuo', 'tennis-rg']
+          name: pa11yci-v<< matrix.page >>
           custom_url_command: |
             if [[ -f ./echo-output ]]; then
               sed -i -e "s#https://demo-circleci.netlify.app#`cat ./echo-output`#g" .pa11yci
