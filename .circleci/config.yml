@@ -52,7 +52,7 @@ jobs:
       - <<: *install_node_modules
       - run:
           name: Print value
-          command: echo << matrix.page >>
+          command: echo << parameters.page >>
       - run:
           name: Build Public
           command: npm run generate
