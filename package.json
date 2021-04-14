@@ -1,6 +1,6 @@
 {
   "name": "demo-circleci",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -19,16 +19,16 @@
   "bundlewatch": {
     "files": [
       {
-        "path": "dist/app-*.js",
-        "maxSize": "70 kB"
+        "path": "dist/*.js",
+        "maxSize": "30 kB"
       },
       {
-        "path": "dist/vendor-*.js",
-        "maxSize": "70 kB"
+        "path": "dist/+(pages|static)/*.js",
+        "maxSize": "30 kB"
       },
       {
-        "path": "dist/!(app|vendor)*.js",
-        "maxSize": "10 kB"
+        "path": "dist/vendors/app*.js",
+        "maxSize": "70 kB"
       }
     ]
   }
